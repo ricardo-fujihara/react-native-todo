@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
 export interface Todo {
@@ -19,7 +19,14 @@ export default function TodoItem({ todo, updateItem, deleteItem }: ITodoItem) {
     };
 
     const deleteTodo = () => {
-        deleteItem(todo.id);
+        Alert.alert(
+            "Excluir",
+            "Tem Certeza que Deseja Deletar Item?",
+            [
+                { text: "Cancelar", style: "cancel"},
+                { text: "Excluir", style: "destructive", onPress: () => deleteItem(todo.id)}
+            ]
+        )
     };
 
     return (
