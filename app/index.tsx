@@ -11,19 +11,31 @@ export default function Index() {
   const [todos, setTodos] = useState<ITodoItem[]>([]);
 
   const addItem = () => {
+    if (newItem.length < 4) return;
+
     const item: ITodoItem = {
-      id: new Date().toString(),
+      id: Date.now().toString(),
       title: newItem,
       completed: false,
     };
 
     //todos.push(newItem); imutavel não permitido
-    setTodos([...todos, item]);
+    setTodos([item, ...todos]);
 
     //limpa campo
     setNewItem("");
 
   }
+  const updateItem = (id) => {
+    setTodos((prevTodos) => {
+      return prevTodos.map((todo) => {
+        if (todo?.id === id) {
+          return { ...todo, completed: !todo.completed };
+        }
+        return todo;
+      });
+    });
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -32,9 +44,9 @@ export default function Index() {
       <SuperButton title="novo item" onPress={addItem} />
 
       {todos.map((todo) => {
-        return <TodoItem title={todo.title} />
-        })     
-      }
+        //tudo que é mapeado no react precisa de uma key
+        return <TodoItem key={todo?.id} todo={todo} updateItem={updateItem} />
+      })}
     </ScrollView>
   );
 }

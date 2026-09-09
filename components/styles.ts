@@ -4,7 +4,7 @@ export const theme = {
     background: "#0A0A0A",
     tint: "yellow",
     text: "white",
-    button: "#333",
+    button: "#555",
 };
 
 export const styles = StyleSheet.create({

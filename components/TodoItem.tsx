@@ -2,21 +2,29 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Text, TouchableOpacity, View } from "react-native";
 import { styles } from "./styles";
 
-export interface ITodoItem {
+interface Todo {
     id: string,
     title: string,
     completed: boolean;
 }
+export interface ITodoItem {
+    todo: Todo;
+    updateItem: (id: string) => void;
+}
 
-export default function TodoItem({title}: ITodoItem) {
+export default function TodoItem({ todo, updateItem }: ITodoItem) {
+    const updateTodo = () => {
+        updateItem(todo.id);
+    };
+
     return (
-        <TouchableOpacity style={styles.card}>
-            <Text style={styles.titleButton}>{title}</Text>
-            <Text style={styles.description}>Subtitle</Text>
+        <TouchableOpacity style={styles.card} onPress={updateTodo}>
+            <Text style={styles.titleButton}>{todo.title}</Text>
+            <Text style={styles.description}>{todo.id}</Text>
 
-           <View style={styles.checkbox}>
-            <Ionicons name="checkmark" size={30} color="white" />
-           </View>
+            <View style={styles.checkbox}>
+                {todo.completed && <Ionicons name="checkmark" size={30} color="white" />}
+            </View>
         </TouchableOpacity>
     );
 }
