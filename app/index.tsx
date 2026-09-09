@@ -13,7 +13,7 @@ export default function Index() {
   const addItem = () => {
     if (newItem.length < 4) return;
 
-    const item: ITodoItem = {
+    const item: Todo = {
       id: Date.now().toString(),
       title: newItem,
       completed: false,
@@ -26,15 +26,12 @@ export default function Index() {
     setNewItem("");
 
   }
-  const updateItem = (id) => {
-    setTodos((prevTodos) => {
-      return prevTodos.map((todo) => {
-        if (todo?.id === id) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      });
-    });
+  const updateItem = (id: string) => {
+    setTodos((todos) =>
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    );
   };
 
   return (
